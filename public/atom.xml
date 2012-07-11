@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Mark On Code]]></title>
+  <link href="http://markoncode.com/atom.xml" rel="self"/>
+  <link href="http://markoncode.com/"/>
+  <updated>2012-07-11T07:44:22-07:00</updated>
+  <id>http://markoncode.com/</id>
+  <author>
+    <name><![CDATA[Mark Carroll]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Getting JIRA to work in WebStorm]]></title>
+    <link href="http://markoncode.com/blog/2012/07/11/getting-jira-to-work-in-webstorm/"/>
+    <updated>2012-07-11T07:24:00-07:00</updated>
+    <id>http://markoncode.com/blog/2012/07/11/getting-jira-to-work-in-webstorm</id>
+    <content type="html"><![CDATA[<p>Installing and configuring the JIRA plugin for Webstorm is not hard to do and gives great integration into the IDE.<br/>
+After installing you will end up with an integrated dashboard like this:</p>
+
+<p><img src="images/2012-07-10-getting-jira-to-work-in-webstorm-1.png" alt="JIRA Dashboard" /></p>
+
+<p>To install go to preferences and go down to plugins:</p>
+
+<p><img src="images/2012-07-10-getting-jira-to-work-in-webstorm-3.png" alt="WebStorm Preferences" /></p>
+
+<p>Click on Browse repositories
+Then type JIRA in the search box.</p>
+
+<p><img src="images/2012-07-10-getting-jira-to-work-in-webstorm-3.png" alt="Browse" /></p>
+
+<p>Then double click on the Atlassian result.<br/>
+Now OK all the dialogs.
+In the status bar you should see the plug-in installing.
+When it has finished you need to restart.</p>
+
+<p>Now you will see an Atlassian button on the tool bar.  After a while (on first load it takes time) you will see the list of bugs assigned to you.</p>
+]]></content>
+  </entry>
+  
+</feed>
