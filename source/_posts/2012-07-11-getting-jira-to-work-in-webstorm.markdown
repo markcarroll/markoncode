@@ -3,22 +3,22 @@ layout: post
 title: "Getting JIRA to work in WebStorm"
 date: 2012-07-11 07:24
 comments: true
-categories: 
+categories: general
 ---
 
 Installing and configuring the JIRA plugin for Webstorm is not hard to do and gives great integration into the IDE.  
 After installing you will end up with an integrated dashboard like this:
 
-![JIRA Dashboard](images/2012-07-10-getting-jira-to-work-in-webstorm-1.png "")
+![JIRA Dashboard](/images/2012-07-10-getting-jira-to-work-in-webstorm-1.png "")
 
 To install go to preferences and go down to plugins:
 
-![WebStorm Preferences](images/2012-07-10-getting-jira-to-work-in-webstorm-3.png "")
+![WebStorm Preferences](/images/2012-07-10-getting-jira-to-work-in-webstorm-3.png "")
 
 Click on Browse repositories
 Then type JIRA in the search box.
 
-![Browse](images/2012-07-10-getting-jira-to-work-in-webstorm-3.png "")
+![Browse](/images/2012-07-10-getting-jira-to-work-in-webstorm-3.png "")
 
 Then double click on the Atlassian result.  
 Now OK all the dialogs. 

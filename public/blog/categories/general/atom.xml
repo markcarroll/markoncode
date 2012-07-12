@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Mark On Code]]></title>
-  <link href="http://markoncode.com/atom.xml" rel="self"/>
+  <title><![CDATA[Category: general | Mark On Code]]></title>
+  <link href="http://markoncode.com/blog/categories/general/atom.xml" rel="self"/>
   <link href="http://markoncode.com/"/>
-  <updated>2012-07-11T19:32:09-07:00</updated>
+  <updated>2012-07-11T19:37:34-07:00</updated>
   <id>http://markoncode.com/</id>
   <author>
     <name><![CDATA[Mark Carroll]]></name>
@@ -21,16 +21,16 @@
     <content type="html"><![CDATA[<p>Installing and configuring the JIRA plugin for Webstorm is not hard to do and gives great integration into the IDE.<br/>
 After installing you will end up with an integrated dashboard like this:</p>
 
-<p><img src="http://markoncode.com/images/2012-07-10-getting-jira-to-work-in-webstorm-1.png" alt="JIRA Dashboard" /></p>
+<p><img src="/images/2012-07-10-getting-jira-to-work-in-webstorm-1.png" alt="JIRA Dashboard" /></p>
 
 <p>To install go to preferences and go down to plugins:</p>
 
-<p><img src="http://markoncode.com/images/2012-07-10-getting-jira-to-work-in-webstorm-3.png" alt="WebStorm Preferences" /></p>
+<p><img src="/images/2012-07-10-getting-jira-to-work-in-webstorm-3.png" alt="WebStorm Preferences" /></p>
 
 <p>Click on Browse repositories
 Then type JIRA in the search box.</p>
 
-<p><img src="http://markoncode.com/images/2012-07-10-getting-jira-to-work-in-webstorm-3.png" alt="Browse" /></p>
+<p><img src="/images/2012-07-10-getting-jira-to-work-in-webstorm-3.png" alt="Browse" /></p>
 
 <p>Then double click on the Atlassian result.<br/>
 Now OK all the dialogs.
