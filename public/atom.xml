@@ -4,7 +4,7 @@
   <title><![CDATA[Mark On Code]]></title>
   <link href="http://markoncode.com/atom.xml" rel="self"/>
   <link href="http://markoncode.com/"/>
-  <updated>2012-08-31T19:38:01+01:00</updated>
+  <updated>2012-08-31T13:39:13-07:00</updated>
   <id>http://markoncode.com/</id>
   <author>
     <name><![CDATA[Mark Carroll]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Hiding headers for empty sections in UITableView]]></title>
     <link href="http://markoncode.com/blog/2012/08/31/hiding-headers-for-empty-sections-in-uitableview/"/>
-    <updated>2012-08-31T19:09:00+01:00</updated>
+    <updated>2012-08-31T19:09:00-07:00</updated>
     <id>http://markoncode.com/blog/2012/08/31/hiding-headers-for-empty-sections-in-uitableview</id>
     <content type="html"><![CDATA[<p>While working on a recent iOS application I found my UITableView showing section headings for sections that did not have any rows in them, i.e. the row-count is zero for that section. I read a lot of different opinions on how to hide the section headings for sections with a zero row-count but in the end it turned out to be quite simple.</p>
 
@@ -77,9 +77,106 @@
   </entry>
   
   <entry>
+    <title type="html"><![CDATA[Managing multiple versions of Xcode]]></title>
+    <link href="http://markoncode.com/blog/2012/08/31/managing-multiple-versions-of-xcode/"/>
+    <updated>2012-08-31T11:48:00-07:00</updated>
+    <id>http://markoncode.com/blog/2012/08/31/managing-multiple-versions-of-xcode</id>
+    <content type="html"><![CDATA[<p>I don&#8217;t know about you, but I am addicted to the &#8216;new and shiny&#8217;. That means I am always on the latest and sometimes not-so-greatest version of every application and tool I use.  In the case of Xcode, running beta versions used to be a tricky process thanks to the way Xcode used to be packaged.  Now however, thanks to the new app bundle distribution mechanism, having side-by-side installations of Xcode is a piece of cake.</p>
+
+<p>As anyone shipping applications to the iOS App Store knows, you may be able to develop on the latest beta (or even Developer Preview) version of Xcode, but in order to submit to the App Store, you need to use a final released version of Xcode.  Fortunately there is a command line tool <code>xcode-select</code> that makes switching easy to do, even switching command-line build script paths.</p>
+
+<p>First open <code>Terminal</code>. Then to see which path all the Xcode tools are currently run <code>xcode-select -print-path</code>:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>xcode-select -print-path
+</span><span class='line'>/Applications/Xcode.app/Contents/Developer
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see, all the developer tools are currently set to use the shipping version of Xcode.</p>
+
+<p>To change to the beta installation of Xcode (in this case 4.5DP4) use <code>xcode-select -switch</code> as super user with the path to the other Xcode installation.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>sudo xcode-select -switch /Applications/Xcode45-DP4.app
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you now run <code>xcode-select -print-path</code> you will see that the path has been changed to the Xcode 4.5 DP4 directory.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>sudo xcode-select -switch /Applications/Xcode45-DP4.app
+</span><span class='line'><span class="nv">$ </span>xcode-select -print-path
+</span><span class='line'>/Applications/Xcode45-DP4.app/Contents/Developer
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To verify this let&#8217;s take a look at the path of one of the commonly used Xcode utilities <code>opendiff</code>.  If you try to see where <code>opendiff</code> resides, however, you will get an interesting answer:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>which opendiff
+</span><span class='line'>/usr/bin/opendiff
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You may have expected something a little different there. If you dig a little deeper you see something even stranger:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>ls -la /usr/bin/opendiff
+</span><span class='line'>lrwxr-xr-x  1 root  wheel  5 Jul 30 23:42 /usr/bin/opendiff@ -&gt; xcrun
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>opendiff</code> command is actually linked to and therefore calling <code>xcrun</code> instead. it turns out <code>xcrun</code> is another tool that Xcode uses to manage path issues in quite an elegant way.
+Try running <code>xcrun -find opendiff</code> and you will get the answer you were probably expecting when you ran <code>which</code>:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>xcrun -find opendiff
+</span><span class='line'>/Applications/Xcode45-DP4.app/Contents/Developer/usr/bin/opendiff
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Adding a <code>-v</code> gives you the full explanation of what is happening here:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>xcrun -v -find opendiff
+</span><span class='line'>xcrun: note: opening log file <span class="s1">&#39;/var/folders/xg/_f7d3jt955q3vhxyj5xd4zth0000gn/T/xcrun_db.log&#39;</span> with mode <span class="s1">&#39;a&#39;</span>
+</span><span class='line'>xcrun: note: <span class="nv">SDKROOT</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span><span class='line'>xcrun: note: <span class="nv">TOOLCHAINS</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span><span class='line'>xcrun: note: <span class="nv">DEVELOPER_DIR</span> <span class="o">=</span> <span class="s1">&#39;/Applications/Xcode45-DP4.app/Contents/Developer&#39;</span>
+</span><span class='line'>xcrun: note: xcrun via opendiff <span class="o">(</span>xcrun<span class="o">)</span>
+</span><span class='line'>xcrun: note: database key is: opendiff|||/Applications/Xcode45-DP4.app/Contents/Developer|
+</span><span class='line'>xcrun: note: lookup resolved in <span class="s1">&#39;/var/folders/xg/_f7d3jt955q3vhxyj5xd4zth0000gn/T/xcrun_db&#39;</span> : <span class="s1">&#39;/Applications/Xcode45-DP4.app/Contents/Developer/usr/bin/opendiff&#39;</span>
+</span><span class='line'>/Applications/Xcode45-DP4.app/Contents/Developer/usr/bin/opendiff
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see, the Xcode developers have put a lot of work behind the scenes to make transitioning between builds of Xcode, and associated developer tools, as easy as possible.</p>
+
+<p>I hope this has been a useful and maybe a little interesting look at managing side-by-side installations of Xcode on OS X.</p>
+
+<p>Mark</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Getting JIRA to work in WebStorm]]></title>
     <link href="http://markoncode.com/blog/2012/07/11/getting-jira-to-work-in-webstorm/"/>
-    <updated>2012-07-11T07:24:00+01:00</updated>
+    <updated>2012-07-11T07:24:00-07:00</updated>
     <id>http://markoncode.com/blog/2012/07/11/getting-jira-to-work-in-webstorm</id>
     <content type="html"><![CDATA[<p>Installing and configuring the JIRA plugin for Webstorm is not hard to do and gives great integration into the IDE.<br/>
 After installing you will end up with an integrated dashboard like this:</p>

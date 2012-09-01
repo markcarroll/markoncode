@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Mark On Code</title>
+  <title>Managing multiple versions of Xcode - Mark On Code</title>
   <meta name="author" content="Mark Carroll">
 
   
-  <meta name="description" content="While working on a recent iOS application I found my UITableView showing section headings for sections that did not have any rows in them, i.e. the &hellip;">
+  <meta name="description" content="I don&#8217;t know about you, but I am addicted to the &#8216;new and shiny&#8217;. That means I am always on the latest and sometimes not-so- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://markoncode.com/">
+  <link rel="canonical" href="http://markoncode.com/blog/2012/08/31/managing-multiple-versions-of-xcode/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -62,107 +62,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/08/31/hiding-headers-for-empty-sections-in-uitableview/">Hiding Headers for Empty Sections in UITableView</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-31T19:09:00-07:00" pubdate data-updated="true">Aug 31<span>st</span>, 2012</time>
-        
-         | <a href="/blog/2012/08/31/hiding-headers-for-empty-sections-in-uitableview/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>While working on a recent iOS application I found my UITableView showing section headings for sections that did not have any rows in them, i.e. the row-count is zero for that section. I read a lot of different opinions on how to hide the section headings for sections with a zero row-count but in the end it turned out to be quite simple.</p>
-
-<p>It turned out to be as simple as returning <code>nil</code> from the <code>titleForHeaderInSection</code> method and of course, <code>0</code> in <code>numberOfRowsInSection</code></p>
-
-<p>So implement the UITableViewDataSource protocol as usual:</p>
-
-<figure class='code'><figcaption><span>TableViewController.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'> <span class="o">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nl">numberOfSectionsInTableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="n">tableView</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="c1">// Return the number of sections.</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">_sections</span><span class="p">.</span><span class="n">count</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="o">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nl">tableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="n">tableView</span> <span class="nl">numberOfRowsInSection:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="n">section</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="c1">// Return the number of rows in the section.</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">_rowsInSection</span><span class="p">[</span><span class="n">section</span><span class="p">].</span><span class="n">count</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="o">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nl">tableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="n">tableView</span> <span class="nl">titleForHeaderInSection:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="n">section</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">_rowsInSection</span><span class="p">[</span><span class="n">section</span><span class="p">].</span><span class="n">count</span> <span class="o">?</span> <span class="n">_sections</span><span class="p">[</span><span class="n">section</span><span class="p">]</span> <span class="o">:</span> <span class="nb">nil</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="o">-</span> <span class="p">(</span><span class="n">UITableViewCell</span> <span class="o">*</span><span class="p">)</span><span class="nl">tableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="n">tableView</span> <span class="nl">cellForRowAtIndexPath:</span><span class="p">(</span><span class="n">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="n">indexPath</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="c1">// configure your cell</span>
-</span><span class='line'>  <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Hope that helps.</p>
-
-<p>Mark</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/08/31/managing-multiple-versions-of-xcode/">Managing Multiple Versions of Xcode</a></h1>
+      <h1 class="entry-title">Managing Multiple Versions of Xcode</h1>
     
     
       <p class="meta">
@@ -180,14 +85,14 @@
 
 <time datetime="2012-08-31T11:48:00-07:00" pubdate data-updated="true">Aug 31<span>st</span>, 2012</time>
         
-         | <a href="/blog/2012/08/31/managing-multiple-versions-of-xcode/#disqus_thread">Comments</a>
+         | <a href="#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I don&#8217;t know about you, but I am addicted to the &#8216;new and shiny&#8217;. That means I am always on the latest and sometimes not-so-greatest version of every application and tool I use.  In the case of Xcode, running beta versions used to be a tricky process thanks to the way Xcode used to be packaged.  Now however, thanks to the new app bundle distribution mechanism, having side-by-side installations of Xcode is a piece of cake.</p>
+<div class="entry-content"><p>I don&#8217;t know about you, but I am addicted to the &#8216;new and shiny&#8217;. That means I am always on the latest and sometimes not-so-greatest version of every application and tool I use.  In the case of Xcode, running beta versions used to be a tricky process thanks to the way Xcode used to be packaged.  Now however, thanks to the new app bundle distribution mechanism, having side-by-side installations of Xcode is a piece of cake.</p>
 
 <p>As anyone shipping applications to the iOS App Store knows, you may be able to develop on the latest beta (or even Developer Preview) version of Xcode, but in order to submit to the App Store, you need to use a final released version of Xcode.  Fortunately there is a command line tool <code>xcode-select</code> that makes switching easy to do, even switching command-line build script paths.</p>
 
@@ -277,22 +182,16 @@ Try running <code>xcrun -find opendiff</code> and you will get the answer you we
 
 <p>Mark</p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/07/11/getting-jira-to-work-in-webstorm/">Getting JIRA to Work in WebStorm</a></h1>
-    
-    
-      <p class="meta">
-        
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Mark Carroll</span></span>
+
+      
 
 
 
@@ -304,48 +203,44 @@ Try running <code>xcrun -find opendiff</code> and you will get the answer you we
   
 
 
-<time datetime="2012-07-11T07:24:00-07:00" pubdate data-updated="true">Jul 11<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/07/11/getting-jira-to-work-in-webstorm/#disqus_thread">Comments</a>
-        
-      </p>
+<time datetime="2012-08-31T11:48:00-07:00" pubdate data-updated="true">Aug 31<span>st</span>, 2012</time>
+      
+
+
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><p>Installing and configuring the JIRA plugin for Webstorm is not hard to do and gives great integration into the IDE.<br/>
-After installing you will end up with an integrated dashboard like this:</p>
-
-<p><img src="/images/2012-07-10-getting-jira-to-work-in-webstorm-1.png" alt="JIRA Dashboard" /></p>
-
-<p>To install go to preferences and go down to plugins:</p>
-
-<p><img src="/images/2012-07-10-getting-jira-to-work-in-webstorm-3.png" alt="WebStorm Preferences" /></p>
-
-<p>Click on Browse repositories
-Then type JIRA in the search box.</p>
-
-<p><img src="/images/2012-07-10-getting-jira-to-work-in-webstorm-3.png" alt="Browse" /></p>
-
-<p>Then double click on the Atlassian result.<br/>
-Now OK all the dialogs.
-In the status bar you should see the plug-in installing.
-When it has finished you need to restart.</p>
-
-<p>Now you will see an Atlassian button on the tool bar.  After a while (on first load it takes time) you will see the list of bugs assigned to you.</p>
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://markoncode.com/blog/2012/08/31/managing-multiple-versions-of-xcode/" data-via="markoncode" data-counturl="http://markoncode.com/blog/2012/08/31/managing-multiple-versions-of-xcode/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
 </div>
-  
-  
 
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/07/11/getting-jira-to-work-in-webstorm/" title="Previous Post: Getting JIRA to work in WebStorm">&laquo; Getting JIRA to work in WebStorm</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/08/31/hiding-headers-for-empty-sections-in-uitableview/" title="Next Post: Hiding headers for empty sections in UITableView">Hiding headers for empty sections in UITableView &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
 
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
+  </section>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -371,7 +266,7 @@ When it has finished you need to restart.</p>
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -391,6 +286,7 @@ When it has finished you need to restart.</p>
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -405,7 +301,10 @@ When it has finished you need to restart.</p>
       var disqus_shortname = 'markoncode';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://markoncode.com/blog/2012/08/31/managing-multiple-versions-of-xcode/';
+        var disqus_url = 'http://markoncode.com/blog/2012/08/31/managing-multiple-versions-of-xcode/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

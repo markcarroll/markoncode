@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Xcode | Mark On Code]]></title>
   <link href="http://markoncode.com/blog/categories/xcode/atom.xml" rel="self"/>
   <link href="http://markoncode.com/"/>
-  <updated>2012-08-31T19:38:01+01:00</updated>
+  <updated>2012-08-31T13:39:13-07:00</updated>
   <id>http://markoncode.com/</id>
   <author>
     <name><![CDATA[Mark Carroll]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Hiding headers for empty sections in UITableView]]></title>
     <link href="http://markoncode.com/blog/2012/08/31/hiding-headers-for-empty-sections-in-uitableview/"/>
-    <updated>2012-08-31T19:09:00+01:00</updated>
+    <updated>2012-08-31T19:09:00-07:00</updated>
     <id>http://markoncode.com/blog/2012/08/31/hiding-headers-for-empty-sections-in-uitableview</id>
     <content type="html"><![CDATA[<p>While working on a recent iOS application I found my UITableView showing section headings for sections that did not have any rows in them, i.e. the row-count is zero for that section. I read a lot of different opinions on how to hide the section headings for sections with a zero row-count but in the end it turned out to be quite simple.</p>
 
