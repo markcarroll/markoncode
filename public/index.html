@@ -340,6 +340,124 @@ When it has finished you need to restart.</p>
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/12/08/jquerymobile-pages-flash-when-running-full-screen-on-ios5/">jQueryMobile Pages Flash When Running Full Screen on iOS5</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-08T04:19:00-08:00" pubdate data-updated="true">Dec 8<span>th</span>, 2011</time>
+        
+         | <a href="/blog/2011/12/08/jquerymobile-pages-flash-when-running-full-screen-on-ios5/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>There seems to be a bug in jQuery Mobile 1.0 (final) that causes a white full screen flash every time the page transitions to a new page.</p>
+
+<p>It doesn’t manifest if I run the page in mobile Safari but if I run the page as a full-screen app (i.e. creating a shortcut to the web app using “Add to Home Screen” from Safari) and setting the meta tag to</p>
+
+<pre><code>&lt;meta name=”apple-mobile-web-app-capable” content=”yes” /&gt;
+</code></pre>
+
+<p>which gets rid of all the browser chrome, then the flashing bug occurs.</p>
+
+<p>Seems there is no fix in the queue yet but a work around has been found.  Simply comment out the call to <code>pageTitle.Focus()</code> on line 2326:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">//direct focus to the page title, or otherwise first focusable element</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">reFocus</span><span class="p">(</span> <span class="nx">page</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">pageTitle</span> <span class="o">=</span> <span class="nx">page</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span> <span class="s2">&quot;.ui-title:eq(0)&quot;</span> <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span> <span class="nx">pageTitle</span><span class="p">.</span><span class="nx">length</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// MSC comment out next line due to flashing bug on iOS 5  </span>
+</span><span class='line'>      <span class="c1">// pageTitle.focus();</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">else</span><span class="p">{</span>
+</span><span class='line'>      <span class="nx">page</span><span class="p">.</span><span class="nx">focus</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Thanks to <a href="https://github.com/hhytt">hhytt</a> for finding this.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/10/12/how-to-mount-a-windows-file-share-in-mac-os-x-through-the-command-line/">How to Mount a Windows File Share in Mac OS X Through the Command Line</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-12T01:32:00-07:00" pubdate data-updated="true">Oct 12<span>th</span>, 2011</time>
+        
+         | <a href="/blog/2011/10/12/how-to-mount-a-windows-file-share-in-mac-os-x-through-the-command-line/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I switched from Windows to a Mac a year and a half ago, but every now and them I want to do something that just seemed so much easier in Windows.  In this case, mount a Windows file share so I can access it from the command line (or script it).  Turns out it is pretty easy too if you know the special sauce.</p>
+
+<pre><code>$ mkdir /Volumes/sharename
+$ mount -t smbfs -o nosuid,nodev //username@servername/sharename /Volumes/sharename
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
     <a href="/blog/archives">Blog Archives</a>
@@ -362,6 +480,14 @@ When it has finished you need to restart.</p>
     
       <li class="post">
         <a href="/blog/2012/07/11/getting-jira-to-work-in-webstorm/">Getting JIRA to work in WebStorm</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/12/08/jquerymobile-pages-flash-when-running-full-screen-on-ios5/">jQueryMobile pages flash when running full screen on iOS5</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/10/12/how-to-mount-a-windows-file-share-in-mac-os-x-through-the-command-line/">How to mount a Windows file share in Mac OS X through the command line</a>
       </li>
     
   </ul>

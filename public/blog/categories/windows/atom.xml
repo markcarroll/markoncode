@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: windows | Mark On Code]]></title>
+  <link href="http://markoncode.com/blog/categories/windows/atom.xml" rel="self"/>
+  <link href="http://markoncode.com/"/>
+  <updated>2012-08-31T19:32:55-07:00</updated>
+  <id>http://markoncode.com/</id>
+  <author>
+    <name><![CDATA[Mark Carroll]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to mount a Windows file share in Mac OS X through the command line]]></title>
+    <link href="http://markoncode.com/blog/2011/10/12/how-to-mount-a-windows-file-share-in-mac-os-x-through-the-command-line/"/>
+    <updated>2011-10-12T01:32:00-07:00</updated>
+    <id>http://markoncode.com/blog/2011/10/12/how-to-mount-a-windows-file-share-in-mac-os-x-through-the-command-line</id>
+    <content type="html"><![CDATA[<p>I switched from Windows to a Mac a year and a half ago, but every now and them I want to do something that just seemed so much easier in Windows.  In this case, mount a Windows file share so I can access it from the command line (or script it).  Turns out it is pretty easy too if you know the special sauce.</p>
+
+<pre><code>$ mkdir /Volumes/sharename
+$ mount -t smbfs -o nosuid,nodev //username@servername/sharename /Volumes/sharename
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

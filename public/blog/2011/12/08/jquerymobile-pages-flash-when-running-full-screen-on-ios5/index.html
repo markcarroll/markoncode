@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Hiding headers for empty sections in UITableView - Mark On Code</title>
+  <title>jQueryMobile pages flash when running full screen on iOS5 - Mark On Code</title>
   <meta name="author" content="Mark Carroll">
 
   
-  <meta name="description" content="While working on a recent iOS application I found my UITableView showing section headings for sections that did not have any rows in them, i.e. the &hellip;">
+  <meta name="description" content="There seems to be a bug in jQuery Mobile 1.0 (final) that causes a white full screen flash every time the page transitions to a new page. It doesn’t &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://markoncode.com/blog/2012/08/31/hiding-headers-for-empty-sections-in-uitableview/">
+  <link rel="canonical" href="http://markoncode.com/blog/2011/12/08/jquerymobile-pages-flash-when-running-full-screen-on-ios5/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -67,7 +67,7 @@
   
   <header>
     
-      <h1 class="entry-title">Hiding Headers for Empty Sections in UITableView</h1>
+      <h1 class="entry-title">jQueryMobile Pages Flash When Running Full Screen on iOS5</h1>
     
     
       <p class="meta">
@@ -83,7 +83,7 @@
   
 
 
-<time datetime="2012-08-31T19:09:00-07:00" pubdate data-updated="true">Aug 31<span>st</span>, 2012</time>
+<time datetime="2011-12-08T04:19:00-08:00" pubdate data-updated="true">Dec 8<span>th</span>, 2011</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -92,14 +92,18 @@
   </header>
 
 
-<div class="entry-content"><p>While working on a recent iOS application I found my UITableView showing section headings for sections that did not have any rows in them, i.e. the row-count is zero for that section. I read a lot of different opinions on how to hide the section headings for sections with a zero row-count but in the end it turned out to be quite simple.</p>
+<div class="entry-content"><p>There seems to be a bug in jQuery Mobile 1.0 (final) that causes a white full screen flash every time the page transitions to a new page.</p>
 
-<p>It turned out to be as simple as returning <code>nil</code> from the <code>titleForHeaderInSection</code> method and of course, <code>0</code> in <code>numberOfRowsInSection</code></p>
+<p>It doesn’t manifest if I run the page in mobile Safari but if I run the page as a full-screen app (i.e. creating a shortcut to the web app using “Add to Home Screen” from Safari) and setting the meta tag to</p>
 
-<p>So implement the UITableViewDataSource protocol as usual:</p>
+<pre><code>&lt;meta name=”apple-mobile-web-app-capable” content=”yes” /&gt;
+</code></pre>
 
-<figure class='code'><figcaption><span>TableViewController.m </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p>which gets rid of all the browser chrome, then the flashing bug occurs.</p>
+
+<p>Seems there is no fix in the queue yet but a work around has been found.  Simply comment out the call to <code>pageTitle.Focus()</code> on line 2326:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -111,42 +115,22 @@
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'> <span class="o">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nl">numberOfSectionsInTableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="n">tableView</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="c1">// Return the number of sections.</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">_sections</span><span class="p">.</span><span class="n">count</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">//direct focus to the page title, or otherwise first focusable element</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">reFocus</span><span class="p">(</span> <span class="nx">page</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">pageTitle</span> <span class="o">=</span> <span class="nx">page</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span> <span class="s2">&quot;.ui-title:eq(0)&quot;</span> <span class="p">);</span>
 </span><span class='line'>
-</span><span class='line'>  <span class="o">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nl">tableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="n">tableView</span> <span class="nl">numberOfRowsInSection:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="n">section</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="c1">// Return the number of rows in the section.</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">_rowsInSection</span><span class="p">[</span><span class="n">section</span><span class="p">].</span><span class="n">count</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span> <span class="nx">pageTitle</span><span class="p">.</span><span class="nx">length</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// MSC comment out next line due to flashing bug on iOS 5  </span>
+</span><span class='line'>      <span class="c1">// pageTitle.focus();</span>
 </span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="o">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nl">tableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="n">tableView</span> <span class="nl">titleForHeaderInSection:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="n">section</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">_rowsInSection</span><span class="p">[</span><span class="n">section</span><span class="p">].</span><span class="n">count</span> <span class="o">?</span> <span class="n">_sections</span><span class="p">[</span><span class="n">section</span><span class="p">]</span> <span class="o">:</span> <span class="nb">nil</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">else</span><span class="p">{</span>
+</span><span class='line'>      <span class="nx">page</span><span class="p">.</span><span class="nx">focus</span><span class="p">();</span>
 </span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="o">-</span> <span class="p">(</span><span class="n">UITableViewCell</span> <span class="o">*</span><span class="p">)</span><span class="nl">tableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="n">tableView</span> <span class="nl">cellForRowAtIndexPath:</span><span class="p">(</span><span class="n">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="n">indexPath</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="c1">// configure your cell</span>
-</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Hope that helps.</p>
-
-<p>Mark</p>
+<p>Thanks to <a href="https://github.com/hhytt">hhytt</a> for finding this.</p>
 </div>
 
 
@@ -169,21 +153,15 @@
   
 
 
-<time datetime="2012-08-31T19:09:00-07:00" pubdate data-updated="true">Aug 31<span>st</span>, 2012</time>
+<time datetime="2011-12-08T04:19:00-08:00" pubdate data-updated="true">Dec 8<span>th</span>, 2011</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/uitableview/'>UITableView</a>, <a class='category' href='/blog/categories/xcode/'>Xcode</a>, <a class='category' href='/blog/categories/ios/'>iOS</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://markoncode.com/blog/2012/08/31/hiding-headers-for-empty-sections-in-uitableview/" data-via="markoncode" data-counturl="http://markoncode.com/blog/2012/08/31/hiding-headers-for-empty-sections-in-uitableview/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://markoncode.com/blog/2011/12/08/jquerymobile-pages-flash-when-running-full-screen-on-ios5/" data-via="markoncode" data-counturl="http://markoncode.com/blog/2011/12/08/jquerymobile-pages-flash-when-running-full-screen-on-ios5/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -196,8 +174,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/08/31/managing-multiple-versions-of-xcode/" title="Previous Post: Managing multiple versions of Xcode">&laquo; Managing multiple versions of Xcode</a>
+        <a class="basic-alignment left" href="/blog/2011/10/12/how-to-mount-a-windows-file-share-in-mac-os-x-through-the-command-line/" title="Previous Post: How to mount a Windows file share in Mac OS X through the command line">&laquo; How to mount a Windows file share in Mac OS X through the command line</a>
       
+      
+        <a class="basic-alignment right" href="/blog/2012/07/11/getting-jira-to-work-in-webstorm/" title="Next Post: Getting JIRA to work in WebStorm">Getting JIRA to work in WebStorm &raquo;</a>
       
     </p>
   </footer>
@@ -280,8 +260,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://markoncode.com/blog/2012/08/31/hiding-headers-for-empty-sections-in-uitableview/';
-        var disqus_url = 'http://markoncode.com/blog/2012/08/31/hiding-headers-for-empty-sections-in-uitableview/';
+        var disqus_identifier = 'http://markoncode.com/blog/2011/12/08/jquerymobile-pages-flash-when-running-full-screen-on-ios5/';
+        var disqus_url = 'http://markoncode.com/blog/2011/12/08/jquerymobile-pages-flash-when-running-full-screen-on-ios5/';
         var disqus_script = 'embed.js';
       
     (function () {
