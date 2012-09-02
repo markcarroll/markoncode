@@ -43,10 +43,10 @@ $ which opendiff
 
 You may have expected something a little different there. If you dig a little deeper you see something even stranger:
 
-{% codeblock lang:sh %}
+``` sh
 $ ls -la /usr/bin/opendiff
 lrwxr-xr-x  1 root  wheel  5 Jul 30 23:42 /usr/bin/opendiff@ -> xcrun
-{% endcodeblock%}
+```
 
 The `opendiff` command is actually linked to and therefore calling `xcrun` instead. it turns out `xcrun` is another tool that Xcode uses to manage path issues in quite an elegant way. 
 Try running `xcrun -find opendiff` and you will get the answer you were probably expecting when you ran `which`:

@@ -4,7 +4,7 @@
   <title><![CDATA[Mark On Code]]></title>
   <link href="http://markoncode.com/atom.xml" rel="self"/>
   <link href="http://markoncode.com/"/>
-  <updated>2012-08-31T19:32:55-07:00</updated>
+  <updated>2012-09-02T06:05:24-07:00</updated>
   <id>http://markoncode.com/</id>
   <author>
     <name><![CDATA[Mark Carroll]]></name>
@@ -125,7 +125,7 @@
 
 <p>You may have expected something a little different there. If you dig a little deeper you see something even stranger:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>ls -la /usr/bin/opendiff
 </span><span class='line'>lrwxr-xr-x  1 root  wheel  5 Jul 30 23:42 /usr/bin/opendiff@ -&gt; xcrun
@@ -210,14 +210,16 @@ When it has finished you need to restart.</p>
 
 <p>It doesn’t manifest if I run the page in mobile Safari but if I run the page as a full-screen app (i.e. creating a shortcut to the web app using “Add to Home Screen” from Safari) and setting the meta tag to</p>
 
-<pre><code>&lt;meta name=”apple-mobile-web-app-capable” content=”yes” /&gt;
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">”apple-mobile-web-app-capable”</span> <span class="na">content=</span><span class="s">”yes”</span> <span class="nt">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>which gets rid of all the browser chrome, then the flashing bug occurs.</p>
 
 <p>Seems there is no fix in the queue yet but a work around has been found.  Simply comment out the call to <code>pageTitle.Focus()</code> on line 2326:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
