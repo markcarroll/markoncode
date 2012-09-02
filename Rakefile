@@ -8,10 +8,10 @@ ssh_user       = "user@domain.com"
 ssh_port       = "22"
 document_root  = "~/website.com/"
 rsync_delete   = true
-deploy_default = "rsync"
+deploy_default = "heroku"  # MSC: was "rsync"
 
 # This will be configured for you when you run config_deploy
-deploy_branch  = "gh-pages"
+deploy_branch  = "master" # MSC: was "gh-pages"
 
 ## -- Misc Configs -- ##
 
@@ -107,6 +107,8 @@ task :new_post, :title do |t, args|
     post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M')}"
     post.puts "comments: true"
     post.puts "categories: "
+    page.puts "description: "
+    page.puts "keywords: "
     post.puts "---"
   end
 end
@@ -143,6 +145,8 @@ task :new_page, :filename do |t, args|
       page.puts "comments: true"
       page.puts "sharing: true"
       page.puts "footer: true"
+      page.puts "description: "
+      page.puts "keywords: "
       page.puts "---"
     end
   else
@@ -239,6 +243,22 @@ task :rsync do
   puts "## Deploying website via Rsync"
   ok_failed system("rsync -avze 'ssh -p #{ssh_port}' #{exclude} #{"--delete" unless rsync_delete == false} #{public_dir}/ #{ssh_user}:#{document_root}")
 end
+
+desc "Deploy website to heroku"
+task :heroku do
+  puts "## Deploying branch to Heroku "
+  cd "#{public_dir}" do
+    system "git add ."
+    system "git add -u"
+    puts "\n## Commiting: Site updated at #{Time.now.utc}"
+    message = "Site updated at #{Time.now.utc}"
+    system "git commit -m \"#{message}\""
+    puts "\n## Pushing generated #{public_dir} website"
+    system "git push heroku master"
+    puts "\n## Heroku deploy complete"
+  end
+end
+
 
 desc "deploy public directory to github pages"
 multitask :push do

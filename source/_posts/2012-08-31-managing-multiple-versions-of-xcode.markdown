@@ -4,6 +4,8 @@ title: "Managing multiple versions of Xcode"
 date: 2012-08-31 11:48
 comments: true
 categories: 
+description: "Managing switching between different versions of Xcode installed on the same system using xcode-select command line tool"
+keywords: "xcode, xcode-select, xcode multiple versions, xcode xcode-select, xcode xcrun"
 ---
 
 I don't know about you, but I am addicted to the 'new and shiny'. That means I am always on the latest and sometimes not-so-greatest version of every application and tool I use.  In the case of Xcode, running beta versions used to be a tricky process thanks to the way Xcode used to be packaged.  Now however, thanks to the new app bundle distribution mechanism, having side-by-side installations of Xcode is a piece of cake.  
